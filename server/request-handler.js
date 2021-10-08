@@ -61,33 +61,8 @@ var requestHandler = function(request, response) {
     method: 'GET'
   };
 
-  // console.log(request.method);
-
-
-
-  // const req = http.request(options, res => {
-  //   console.log(`statusCode: ${res.statusCode}`);
-
-  //   res.on('data', d => {
-  //     process.stdout.write(d);
-  //   });
-  // });
-
-  // req.on('error', error => {
-  //   console.error(error);
-  // });
-  // req.end();
-
-  // Do some basic logging.
-  //
-  // Adding more logging to your server can be an easy way to get passive
-  // debugging help, but you should always be careful about leaving stray
-  // console.logs in your code.
   console.log('Serving request type ' + request.method + ' for url ' + request.url);
 
-  // The outgoing status.
-
-  // See the note below about CORS headers.
   var headers = defaultCorsHeaders;
 
   // Tell the client we are sending them plain text.
@@ -98,7 +73,6 @@ var requestHandler = function(request, response) {
 
   // .writeHead() writes to the request line and headers of the response,
   // which includes the status and all headers.
-  console.log(request.url);
   // console.log(response);
 
   if (request.method === 'OPTIONS') {
@@ -106,9 +80,21 @@ var requestHandler = function(request, response) {
     response.writeHead(statusCode, headers);
     response.end();
   } else if (request.method === 'POST') {
-    var statusCode = 201;
-    response.writeHead(statusCode, headers);
-    response.end(JSON.stringify({adam: 'go'}));
+
+
+    var body = [];
+    request.on('data', (data) => {
+      // console.log(data.toString());
+      body.push(data);
+    }).on('end', () => {
+      body = Buffer.concat(body).toString();
+      messages.push(body);
+      var statusCode = 201;
+      response.writeHead(statusCode, headers);
+      response.end();
+    });
+
+
   } else if (request.method === 'GET') {
     var statusCode = 200;
     response.writeHead(statusCode, headers);
@@ -131,4 +117,4 @@ var requestHandler = function(request, response) {
 
 
 
-exports.handleRequest = requestHandler;
+exports.requestHandler = requestHandler;
