@@ -12,7 +12,8 @@
     "postinstall": "curl -s https://raw.githubusercontent.com/reactorcore/pomander/master/bin/install | bash",
     "start": "node server/basic-server.js",
     "test": "mocha server/spec",
-    "lint": "eslint ./"
+    "lint": "eslint ./",
+    "start-dev": "live-server"
   },
   "devDependencies": {
     "chai": "^4.2.0",
