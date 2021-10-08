@@ -33,7 +33,7 @@ var jsonBody = require('body/json');
 
 
 
-
+var messages = [];
 
 var defaultCorsHeaders = {
   'access-control-allow-origin': '*',
@@ -86,7 +86,6 @@ var requestHandler = function(request, response) {
   console.log('Serving request type ' + request.method + ' for url ' + request.url);
 
   // The outgoing status.
-  var statusCode = 200;
 
   // See the note below about CORS headers.
   var headers = defaultCorsHeaders;
@@ -99,21 +98,24 @@ var requestHandler = function(request, response) {
 
   // .writeHead() writes to the request line and headers of the response,
   // which includes the status and all headers.
-  response.writeHead(statusCode, headers);
-
+  console.log(request.url);
   // console.log(response);
 
-  if (request.method === 'POST') {
-
-    console.log('postyposty');
+  if (request.method === 'OPTIONS') {
+    var statusCode = 200;
+    response.writeHead(statusCode, headers);
+    response.end();
+  } else if (request.method === 'POST') {
+    var statusCode = 201;
+    response.writeHead(statusCode, headers);
     response.end(JSON.stringify({adam: 'go'}));
-  } else {
-
-    response.end(JSON.stringify({adam: 'go'}));
+  } else if (request.method === 'GET') {
+    var statusCode = 200;
+    response.writeHead(statusCode, headers);
+    var resp = {};
+    resp.results = messages;
+    response.end(JSON.stringify(resp));
   }
-
-
-  // response.write('wanko');
 
 
 
