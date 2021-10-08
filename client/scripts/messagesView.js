@@ -45,7 +45,7 @@ var MessagesView = {
 
     var $message = MessageView.render(message);
     MessagesView.$chats.append($message);
-    Parse.create(message);
+    Parse.create(message, (data) => console.log(data));
 
     // App.fetch(Parse.create(message));
     // callback();

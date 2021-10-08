@@ -40,4 +40,4 @@ var Rooms = {
 
 };
 
-console.log(Rooms._data);
+// console.log(Rooms._data);

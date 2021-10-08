@@ -25,6 +25,13 @@ this file and include it in basic-server.js so that it actually works.
 const path = require('path');
 
 
+var textBody = require('body');
+var jsonBody = require('body/json');
+
+
+
+
+
 
 
 
@@ -54,7 +61,7 @@ var requestHandler = function(request, response) {
     method: 'GET'
   };
 
-  console.log(request.method);
+  // console.log(request.method);
 
 
 
@@ -94,13 +101,21 @@ var requestHandler = function(request, response) {
   // which includes the status and all headers.
   response.writeHead(statusCode, headers);
 
+  // console.log(response);
 
+  if (request.method === 'POST') {
 
+    console.log('postyposty');
+    response.end(JSON.stringify({adam: 'go'}));
+  } else {
 
-
-  if ( request.method === 'OPTIONS' ) {
-    response.write('wanko');
+    response.end(JSON.stringify({adam: 'go'}));
   }
+
+
+  // response.write('wanko');
+
+
 
   // Make sure to always call response.end() - Node may not send
   // anything back to the client until you do. The string you pass to
@@ -109,7 +124,7 @@ var requestHandler = function(request, response) {
   //
   // Calling .end "flushes" the response's internal buffer, forcing
   // node to actually send all the data over to the client.
-  response.end('Hello, World!');
+
 };
 
 
