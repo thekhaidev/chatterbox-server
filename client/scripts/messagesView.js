@@ -5,72 +5,55 @@ var MessagesView = {
 
   $chats: $('#chats'),
 
-  initialize: function(selectedRoom) {
-    // TODO: Perform any work which needs to be done
-    // when this view loads.
-
-    // search rooms._data for selected room
-    // invoke messagesview.render on selected room
-    if (Rooms._data[selectedRoom]) {
-      MessagesView.$chats.empty();
-      MessagesView.render(Rooms._data[selectedRoom]);
-      console.log(Rooms._data[selectedRoom]);
-    }
-
-
+  initialize: function() {
+    MessagesView.$chats.on('click', MessagesView.handleClick);
   },
 
-  render: function(messages) {
+  render: function() {
     // TODO: Render _all_ the messages.
-    for (var i = 0; i < messages.length; i++) {
+    if (Friends.currentFriend === 'All') {
+      buttonDisplay = 'invisible';
+    } else {
+      buttonDisplay = 'visible';
+    }
+    MessagesView.$chats.html(`<button id='allFriends' class="button ${buttonDisplay}">view all messages</button>`);
+    console.log(Messages._data);
+    Messages.get().forEach( e => {
 
+      if (Rooms.currentRoom !== 'All' && e.roomname !== Rooms.currentRoom) {
+        return;
+      }
+      if (Friends.currentFriend !== 'All' && e.username !== Friends.currentFriend) {
+        return;
+      }
+      MessagesView.renderMessage(e);
+    });
+  },
 
-      var $message = MessageView.render({
-        username: messages[i].username,
-        text: messages[i].text
-
-      });
+  renderMessage: function(message) {
+    if (message.text && message.username) {
+      message.text = message.text.replace('<script', '?');
+      message.text = message.text.replace('<style', '?');
+      var $message = MessageView.render(message);
       MessagesView.$chats.append($message);
     }
-    // if (typeof text !== 'string') {
-    //   Document.createTextNode(text: messages[i].text);
-    // }
-    // console.log(MessagesView.$chats);
-
-  },
-  renderMessage: function(message) {
-    // TODO: Render a single message.
-    // create message variable
-    // append to chats
-
-    var $message = MessageView.render(message);
-    MessagesView.$chats.append($message);
-    Parse.create(message, (data) => console.log(data));
-
-    // App.fetch(Parse.create(message));
-    // callback();
-
-    // var $message = MessageView.render({
-    //   username: message[0].username,
-    //   text: message[0].text
-    // });
-    // $message.appendTo.$chats;
-    // console.log(MessagesView.$chats);
-    // MessagesView.$chats.prepend($message);
-
-
-    //prepend messages to $chats
   },
 
+  handleClick: function(e) {
+    ////username event listener
+    if ( e.target.classList.contains('username')) {
+      var username = e.target.innerText;
+      Friends.toggleStatus(username);
+      FriendsView.render();
+    }
+    if (e.target.classList.contains('visible')) {
+      Friends.currentFriend = 'All';
+      MessagesView.render();
+    }
 
-
-  //   var compiled = _.template("hello: <%= name %>");
-  // compiled({name: 'moe'});
-  // => "hello: moe"
-
-  handleClick: function(event) {
-    // TODO: handle a user clicking on a message
-    // (this should add the sender to the user's friend list).
+    if (e.target.classList.contains('gitUrl')) {
+      window.location.href = `https://www.github.com/${e.target.innerText}`;
+    }
   }
 
 };

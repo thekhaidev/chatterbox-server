@@ -10,16 +10,20 @@ var App = {
 
   initialize: function() {
     App.username = window.location.search.substr(10);
-
+    $(document).ready(function() {
+      $('time.timeago').timeago();
+    });
     FormView.initialize();
     RoomsView.initialize();
     MessagesView.initialize();
-
+    FriendsView.initialize();
     // Fetch initial batch of messages
     App.startSpinner();
     App.fetch(App.stopSpinner);
-    setInterval(App.fetch, 10000);
 
+    setInterval( () => App.fetch(), 10000 );
+
+    /////event listener for whole document
 
     // TODO: Make sure the app loads data from the API
     // continually, instead of just once at the start.
@@ -28,15 +32,13 @@ var App = {
   fetch: function(callback = ()=>{}) {
     Parse.readAll((data) => {
       // examine the response from the server request:
-      data = JSON.parse(data);
-      console.log(data);
       callback();
-      // TODO: Use the data to update Messages and Rooms
+      data = JSON.parse(data);
+      Messages.update(data);
+      Rooms.update(data);
       // and re-render the corresponding views.
-      MessagesView.render(data);
-      RoomsView.render(data);
-      Rooms.setRoomAs(data);
-
+      MessagesView.render();
+      RoomsView.render();
     });
   },
 
@@ -46,7 +48,6 @@ var App = {
   },
 
   stopSpinner: function() {
-    // console.log('STFU SPINNER');
     App.$spinner.fadeOut('fast');
     FormView.setStatus(false);
   }

@@ -5,22 +5,17 @@
 var Messages = {
 
   // TODO: Define how you want to store your messages.
-  // messages should be stored as objects
-  _data: {},
+  _data: [],
 
   // TODO: Define methods which allow you to retrieve from,
   // add to, and generally interact with the messages.
+  update: function(data) {
+    Messages._data = data;
+    // console.log(Messages._data)
+  },
 
-  // get messages - return current messages
-
-  // get: function() {
-
-  // },
-
-  // add - check if there are new messages and then render them
-
-  add: function() {
-
+  get: function() {
+    return Messages._data;
   }
 
 };

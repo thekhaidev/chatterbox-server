@@ -37,16 +37,15 @@ app.get('/', (req, res) => {
 app.get('/classes/messages', (req, res) => {
   var statusCode = 200;
   res.writeHead(statusCode, headers);
-  var resp = {};
   // console.log(messages);
-  resp.results = messages;
+  var resp = messages.slice(0, 50);
   res.end(JSON.stringify(resp));
 
 });
 
 app.post('/classes/messages', (req, res) => {
   messages.push(req.body);
-  // console.log(messages);
+  console.log(req.body);
   var statusCode = 201;
   res.writeHead(statusCode, headers);
   res.end();
