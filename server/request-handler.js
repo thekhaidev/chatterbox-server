@@ -79,8 +79,9 @@ var requestHandler = function(request, response) {
     var statusCode = 200;
     response.writeHead(statusCode, headers);
     response.end();
-  } else if (request.method === 'POST') {
 
+
+  } else if (request.method === 'POST') {
 
     var body = [];
     request.on('data', (data) => {
@@ -88,7 +89,7 @@ var requestHandler = function(request, response) {
       body.push(data);
     }).on('end', () => {
       body = Buffer.concat(body).toString();
-      messages.push(body);
+      messages.push(JSON.parse(body));
       var statusCode = 201;
       response.writeHead(statusCode, headers);
       response.end();
@@ -99,6 +100,7 @@ var requestHandler = function(request, response) {
     var statusCode = 200;
     response.writeHead(statusCode, headers);
     var resp = {};
+    console.log(messages);
     resp.results = messages;
     response.end(JSON.stringify(resp));
   }

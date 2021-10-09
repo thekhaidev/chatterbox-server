@@ -18,7 +18,7 @@ var App = {
     // Fetch initial batch of messages
     App.startSpinner();
     App.fetch(App.stopSpinner);
-    // setInterval(App.fetch, 10000);
+    setInterval(App.fetch, 10000);
 
 
     // TODO: Make sure the app loads data from the API
