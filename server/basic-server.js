@@ -8,6 +8,7 @@ var port = 3000;
 app.use(cors());
 app.use(express.json());
 
+
 var messages = [];
 
 var defaultCorsHeaders = {
@@ -21,6 +22,12 @@ var headers = defaultCorsHeaders;
 headers['Content-Type'] = 'text/plain';
 
 ////define requsest handlers
+
+// app.all('*', (req) => {
+//   console.log(req.url);
+// });
+
+
 app.get('/', (req, res) => {
   var statusCode = 200;
   res.writeHead(statusCode, headers);
@@ -31,7 +38,7 @@ app.get('/classes/messages', (req, res) => {
   var statusCode = 200;
   res.writeHead(statusCode, headers);
   var resp = {};
-  console.log(messages);
+  // console.log(messages);
   resp.results = messages;
   res.end(JSON.stringify(resp));
 
@@ -39,7 +46,7 @@ app.get('/classes/messages', (req, res) => {
 
 app.post('/classes/messages', (req, res) => {
   messages.push(req.body);
-  console.log(messages);
+  // console.log(messages);
   var statusCode = 201;
   res.writeHead(statusCode, headers);
   res.end();

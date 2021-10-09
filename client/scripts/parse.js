@@ -25,6 +25,7 @@ var Parse = {
       url: Parse.server,
       type: 'GET',
       contentType: 'text/plain',
+      data: {order: 'createdAt'},
       success: successCB,
       error: errorCB || function(error) {
         console.error('chatterbox: Failed to fetch messages', error);
