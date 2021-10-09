@@ -75,34 +75,40 @@ var requestHandler = function(request, response) {
   // which includes the status and all headers.
   // console.log(response);
 
-  if (request.method === 'OPTIONS') {
-    var statusCode = 200;
-    response.writeHead(statusCode, headers);
-    response.end();
-
-
-  } else if (request.method === 'POST') {
-
-    var body = [];
-    request.on('data', (data) => {
-      // console.log(data.toString());
-      body.push(data);
-    }).on('end', () => {
-      body = Buffer.concat(body).toString();
-      messages.push(JSON.parse(body));
-      var statusCode = 201;
+  if (request.url === '/classes/messages') {
+    if (request.method === 'OPTIONS') {
+      var statusCode = 200;
       response.writeHead(statusCode, headers);
       response.end();
-    });
 
 
-  } else if (request.method === 'GET') {
-    var statusCode = 200;
+    } else if (request.method === 'POST') {
+
+      var body = [];
+      request.on('data', (data) => {
+        // console.log(data.toString());
+        body.push(data);
+      }).on('end', () => {
+        body = Buffer.concat(body).toString();
+        messages.push(JSON.parse(body));
+        var statusCode = 201;
+        response.writeHead(statusCode, headers);
+        response.end();
+      });
+
+
+    } else if (request.method === 'GET') {
+      var statusCode = 200;
+      response.writeHead(statusCode, headers);
+      var resp = {};
+      console.log(messages);
+      resp.results = messages;
+      response.end(JSON.stringify(resp));
+    }
+  } else {
+    var statusCode = 404;
     response.writeHead(statusCode, headers);
-    var resp = {};
-    console.log(messages);
-    resp.results = messages;
-    response.end(JSON.stringify(resp));
+    response.end();
   }
 
 
