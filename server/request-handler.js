@@ -22,17 +22,6 @@ this file and include it in basic-server.js so that it actually works.
 // Another way to get around this restriction is to serve you chat
 // client from this domain by setting up static file serving.
 
-const path = require('path');
-
-
-var textBody = require('body');
-var jsonBody = require('body/json');
-
-
-
-
-
-
 var messages = [];
 
 var defaultCorsHeaders = {
@@ -52,14 +41,6 @@ var requestHandler = function(request, response) {
   // Documentation for both request and response can be found in the HTTP section at
   // http://nodejs.org/documentation/api/
 
-  const http = require('http');
-
-  const options = {
-    hostname: '127.0.0.1',
-    port: 3000,
-    path: '/classes/messages',
-    method: 'GET'
-  };
 
   console.log('Serving request type ' + request.method + ' for url ' + request.url);
 
@@ -76,17 +57,15 @@ var requestHandler = function(request, response) {
   // console.log(response);
 
   if (request.url === '/classes/messages') {
+
     if (request.method === 'OPTIONS') {
       var statusCode = 200;
       response.writeHead(statusCode, headers);
       response.end();
 
-
     } else if (request.method === 'POST') {
-
       var body = [];
       request.on('data', (data) => {
-        // console.log(data.toString());
         body.push(data);
       }).on('end', () => {
         body = Buffer.concat(body).toString();
@@ -95,7 +74,6 @@ var requestHandler = function(request, response) {
         response.writeHead(statusCode, headers);
         response.end();
       });
-
 
     } else if (request.method === 'GET') {
       var statusCode = 200;
