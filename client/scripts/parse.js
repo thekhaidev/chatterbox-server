@@ -12,7 +12,7 @@ var Parse = {
       url: Parse.server,
       type: 'POST',
       data: JSON.stringify(message),
-      contentType: 'text/plain',
+      contentType: 'application/json',
       success: successCB,
       error: errorCB || function(error) {
         console.error('chatterbox: Failed to fetch messages', error);

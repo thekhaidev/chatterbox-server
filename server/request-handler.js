@@ -23,6 +23,7 @@ this file and include it in basic-server.js so that it actually works.
 // client from this domain by setting up static file serving.
 
 var messages = [];
+var fs = require('fs');
 
 var defaultCorsHeaders = {
   'access-control-allow-origin': '*',
@@ -42,6 +43,8 @@ var requestHandler = function(request, response) {
   // http://nodejs.org/documentation/api/
 
 
+
+
   console.log('Serving request type ' + request.method + ' for url ' + request.url);
 
   var headers = defaultCorsHeaders;
@@ -55,8 +58,11 @@ var requestHandler = function(request, response) {
   // .writeHead() writes to the request line and headers of the response,
   // which includes the status and all headers.
   // console.log(response);
-
-  if (request.url === '/classes/messages') {
+  if (request.url === '/') {
+    var statusCode = 200;
+    response.writeHead(statusCode, headers);
+    response.end('Heres the page');
+  } else if (request.url === '/classes/messages') {
 
     if (request.method === 'OPTIONS') {
       var statusCode = 200;

@@ -1,43 +1,79 @@
 var {requestHandler} = require('./request-handler.js');
 
-/* Import node's http module: */
-var http = require('http');
+var express = require('express');
+var cors = require('cors');
+// const bodyParser = require('body-parser');
 
-
-// Every server needs to listen on a port with a unique number. The
-// standard port for HTTP servers is port 80, but that port is
-// normally already claimed by another server and/or not accessible
-// so we'll use a standard testing port like 3000, other common development
-// ports are 8080 and 1337.
+var app = express();
 var port = 3000;
 
-// For now, since you're running this server on your local machine,
-// we'll have it listen on the IP address 127.0.0.1, which is a
-// special address that always refers to localhost.
-var ip = '127.0.0.1';
+var messages = [];
+app.use(cors());
+// app.use(bodyParser.urlencoded({extended: false }));
+app.use(express.json());
+
+
+var defaultCorsHeaders = {
+  'access-control-allow-origin': '*',
+  'access-control-allow-methods': 'GET, POST, PUT, DELETE, OPTIONS',
+  'access-control-allow-headers': 'content-type, accept, Authorization',
+  'access-control-max-age': 10 // Seconds.
+};
+var headers = defaultCorsHeaders;
+
+headers['Content-Type'] = 'text/plain';
+
+////define requsest handlers
+app.get('/', (req, res) => {
+  var statusCode = 200;
+  res.writeHead(statusCode, headers);
+  res.end('Heres the page');
+});
+
+app.get('/classes/messages', (req, res) => {
+  var statusCode = 200;
+  res.writeHead(statusCode, headers);
+  var resp = {};
+  console.log(messages);
+  resp.results = messages;
+  res.end(JSON.stringify(resp));
+
+});
+
+app.post('/classes/messages', (req, res) => {
+  console.log(req.body);
+});
 
 
 
-// We use node's http module to create a server.
-//
-// The function we pass to http.createServer will be used to handle all
-// incoming requests.
-//
-// After creating the server, we will tell it to listen on the given port and IP. */
-var server = http.createServer(requestHandler);
-console.log('Listening on http://' + ip + ':' + port);
-server.listen(port, ip);
+//  if (request.url === '/classes/messages') {
 
-// To start this server, run:
-//
-//   node basic-server.js
-//
-// on the command line.
-//
-// To connect to the server, load http://127.0.0.1:3000 in your web
-// browser.
-//
-// server.listen() will continue running as long as there is the
-// possibility of serving more requests. To stop your server, hit
-// Ctrl-C on the command line.
+//   if (request.method === 'OPTIONS') {
+//     var statusCode = 200;
+//     response.writeHead(statusCode, headers);
+//     response.end();
+
+//   } else if (request.method === 'POST') {
+//     var body = [];
+//     request.on('data', (data) => {
+//       body.push(data);
+//     }).on('end', () => {
+//       body = Buffer.concat(body).toString();
+//       messages.push(JSON.parse(body));
+//       var statusCode = 201;
+//       response.writeHead(statusCode, headers);
+//       response.end();
+//     });
+//   }
+// } else {
+//   var statusCode = 404;
+//   response.writeHead(statusCode, headers);
+//   response.end();
+// }
+
+
+
+app.listen(port, () => {
+  console.log('Listening on http://' + port);
+});
 
