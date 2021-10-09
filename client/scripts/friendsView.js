@@ -12,7 +12,7 @@ var FriendsView = {
   },
 
   render: function() {
-    FriendsView.$list.html('<h3 id="friendsTitle"> FRIENDS </h3>');
+    // FriendsView.$list.html('<h3 id="friendsTitle" class="title-bar"> FRIENDS </h3>');
     Friends.get().forEach( e => {
       FriendsView.renderFriend(e);
     });

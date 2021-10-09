@@ -11,8 +11,9 @@ var MessageView = {
 
 
 
-
       <div class="chat">
+
+
 
         <div class="firstRow">
           <div class="username">

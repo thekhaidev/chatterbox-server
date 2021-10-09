@@ -4,6 +4,10 @@
     <meta charset="utf-8">
     <title>chatterbox</title>
     <link rel="stylesheet" href="client/styles/styles.css">
+    <link
+    rel="stylesheet"
+    href="https://unpkg.com/98.css"
+  >
     <script src="node_modules/jquery/dist/jquery.js"></script>
     <script src="node_modules/underscore/underscore.js"></script>
     <script src="./lib/timeAgo.js"></script>
@@ -27,27 +31,59 @@
     </script>
   </head>
   <body>
-    <div id="main">
-      <h1>chatterbox</h1>
-      <div class="spinner"><img src="client/images/spiffygif_46x46.gif"></div>
-      <div id="rooms">
-        Room:
-        <select></select>
-        <button class="button">Add Room</button>
-      </div>
-      <form action="#" id="send" method="post">
-        <input type="text" name="message" id="message button"/>
-        <input type="submit" name="submit" class="submit button"/>
-      </form>
-      <div id="friendsContainer">
-      </div>
-      <div id="about-us">
-        <p>This is a project created KHAI TRAN and adam juiceman as students
-        at hack reactor san francisco</p>
-      </div>
+    <div id="main" class="window">
+      <h1>Chatterbox</h1>
     </div>
-    <div id="chats">
-    </div>
+      <!-- <div class="spinner"><img src="client/images/spiffygif_46x46.gif"></div> -->
+       <div>
+
+       </div>
+
+       <div id="side">
+        <div id="friendsContainer" class="window">
+
+          <div class="title-bar title-friends">
+            <div class="title-bar-text">Friends</div>
+            <div class="title-bar-controls">
+              <button aria-label="Minimize"></button>
+              <button aria-label="Maximize"></button>
+              <button aria-label="Close"></button>
+            </div>
+          </div>
+
+
+
+      </div>
+
+        <div class="title-bar title-messages">
+          <div class="title-bar-text">Messages</div>
+          <div class="title-bar-controls">
+            <button aria-label="Minimize"></button>
+            <button aria-label="Maximize"></button>
+            <button aria-label="Close"></button>
+          </div>
+        </div>
+            <div id="chats" class="window">
+          </div>
+       </div>  <div id="rooms">
+          Room:
+          <select></select>
+          <button class="button">Add Room</button>
+        </div>
+        <!-- <textarea id="send" name="message" rows="4" cols="50">
+          </textarea> -->
+        <form action="#" id="send" method="post">
+          <input type="text" name="message" id="message-button"/>
+          <button><input type="submit" name="submit" class="submit button"/></button>
+        </form>
+
+
+
+
+    <div id="about-us">
+      <p>This project was created by Khai Tran and Adam Johnson as students
+      at Hack Reactor San Francisco</p>
+
     <script src="client/env/config.js"></script>
     <script src="client/scripts/parse.js"></script>
     <script src="client/scripts/rooms.js"></script>

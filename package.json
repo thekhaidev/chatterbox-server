@@ -23,6 +23,7 @@
     "request": "^2.88.2"
   },
   "dependencies": {
+    "98.css": "^0.1.17",
     "body": "^5.1.0",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",

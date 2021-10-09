@@ -19,7 +19,6 @@ var FormView = {
     // TODO: Currently, this is all handleSubmit does.
     // Make this function actually send a message to the Parse API.
     var text = FormView.$form.find('input[type=text]').val();
-
     var username = window.location.search.slice(10).replace('%20', ' ');
     var roomname = Rooms.currentRoom === 'All' ? null : Rooms.currentRoom;
     var created_at = new Date();
